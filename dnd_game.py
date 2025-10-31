@@ -1,4 +1,7 @@
 #Tehee
+import random
+
+print(random.randint(1,10))
 
 print('yaya')
 
@@ -18,10 +21,18 @@ class Character():
     def shield(self):
         print(f'{self.name} used shields')
 
+    def skip_turn(self):
+        pass
+
+    def check_stats(self):
+        print(f'{self.name}, has {self.health} hp left, {self.ult} ult points')
+
+
+
 class Rogue(Character):
-    def __init__(self, name, agility):
+    def __init__(self, name, stamina):
         super().__init__(name)
-        self.agility = agility
+        self.stamina = stamina
 
     def add(self): # to test if the ult system works
         self.ult += 10
@@ -37,6 +48,12 @@ class Rogue(Character):
         pass
 
 
+    def check_stats(self):
+        super().check_stats()
+        print(f'And {self.stamina} stamina points left.')
+
+
+
 class Mage(Character):
     def __init__(self, name, mana):
         super().__init__(name)
@@ -44,12 +61,17 @@ class Mage(Character):
 
     def L_ATK():
         pass
-    def M_ATK():
-        pass
+    def M_ATK(self):
+        print(f'{self.name} used a medium attack')
     def H_ATK():
         pass
     def special():
         pass
+
+    def check_stats(self):
+        super().check_stats()
+        print(f'And {self.mana} mana points left.')
+
 
 
 class Warrior(Character):
@@ -66,7 +88,14 @@ class Warrior(Character):
         pass
     def special():
         pass
+    
 
+    def check_stats(self):
+        super().check_stats()
+        print(f'And {self.strength} strength points left.')
+
+
+####################################
 
 class Arena():
     def __init__(self):
@@ -102,19 +131,32 @@ class Arena():
         
 
     def choice(self, person):
-        yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult'))
+        yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult, 9. to check stats'))
         self.yaya = yaya
         if yaya == 0:
             person.shield()
-        if yaya == 1:
+        elif yaya == 1:
             person.L_ATK()
-        if yaya == 2:
+        elif yaya == 2:
+            person.M_ATK()
+        elif yaya == 3:
             pass
-        if yaya == 3:
+        elif yaya == 4:
             pass
-        if yaya == 4:
-            pass
+        elif yaya == 9:
+            person.check_stats()
+        else:
+            print('uh oh')
 
+
+
+
+class diffArena(Arena):
+    def __init__(self):
+        super().__init__()
+
+
+################################33
 
 
 new = Character('Michelle')
@@ -153,3 +195,4 @@ print(player_2)
 
 
 place.choice(player_1)
+place.choice(player_2)
