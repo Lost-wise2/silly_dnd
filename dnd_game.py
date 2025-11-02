@@ -28,7 +28,7 @@ class Character():
         print(f'{self.name} used shields')
 
     def skip_turn(self):
-        pass
+        print(f'{self.name} has skipped their turn')
 
     def check_stats(self):
         print(f'{self.name}, has {self.health} hp left, {self.ult} ult points')
@@ -137,7 +137,8 @@ class Warrior(Character):
 class Arena():
     def __init__(self):
         self.yaya = 0
-        self.running = True
+        self.dead_character = False
+        #self.running = True
 
 
     #def how_many(self):
@@ -148,6 +149,7 @@ class Arena():
     #    while x < how_player_count:
     #        x += 1
     #        player_count.append(x)
+
 
 
     def character_choice(self, player):
@@ -166,7 +168,7 @@ class Arena():
         else:
             print('oj')
 
-        
+
 
     def choice(self, person, victim):
         yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult, 9. to check stats'))
@@ -183,15 +185,30 @@ class Arena():
             pass
         elif yaya == 9:
             person.check_stats()
+        elif yaya == 10:
+            person.skip_turn()
         else:
             print('uh oh')
     
-    
+
+
+
+
+    def character_death(self):
+        self.running = False
+        self.dead_character = True
+        print('done')
+
+
+
+
 
     def game(self):
-        
+        self.running = True
+        round = 1
         while self.running == True:
-            print('round 1 starts')
+            print("Round", round, "has begun.")
+            
             place.choice(player_1, player_2)
             #player_2.is_alive()
             #if player_2.alive == False:
@@ -200,6 +217,9 @@ class Arena():
             #else:
             #    pass
             
+            if self.dead_character == True:
+                break
+            
             place.choice(player_2, player_1)
             #player_1.is_alive()
             #if player_1.alive == False:
@@ -207,11 +227,10 @@ class Arena():
             #    running = False
             #else:
             #    pass
-            print('round 1 over')
+            print("Round", round, "has ended.")
+            round += 1
 
-    def character_death(self):
-        self.running = False
-        pass
+    
         
         
             
