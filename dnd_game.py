@@ -322,3 +322,7 @@ place.game()
 #    del player_1
 #else:
 #    print('oj')
+
+
+
+# all thats left now is to special arenas, and finsih all the types of attacks and ults
