@@ -6,6 +6,11 @@ print(random.randint(1,10))
 print('yaya')
 
 
+
+
+
+
+
 class Character():
     def __init__(self, name):
         self.name = name
@@ -49,6 +54,11 @@ class Character():
 
     
 
+
+
+
+
+
         
 
     
@@ -89,6 +99,7 @@ class Rogue(Character):
 
 
 
+
 class Mage(Character):
     def __init__(self, name, mana):
         super().__init__(name)
@@ -107,6 +118,7 @@ class Mage(Character):
     def check_stats(self):
         super().check_stats()
         print(f'And {self.mana} mana points left.')
+
 
 
 
@@ -133,6 +145,14 @@ class Warrior(Character):
 
 
 ####################################
+
+
+
+
+
+
+
+
 
 class Arena():
     def __init__(self):
@@ -255,12 +275,24 @@ class diffArena(Arena):
 ################################33
 
 
+
+
+
+
 new = Character('Michelle')
 silly = Rogue('two dolla', 20)
 #new.creation()
 silly.add()
 silly.add()
+
+
+
+
+
 ########################################################
+
+
+
 
 beginning = True
 
@@ -278,6 +310,11 @@ while beginning == True:
         quit
     else:
         pass
+
+
+
+
+
 
 
 
