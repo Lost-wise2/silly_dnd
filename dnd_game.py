@@ -10,7 +10,7 @@ print('yaya')
 
 
 
-
+# Main class for the characters
 class Character():
     def __init__(self, name):
         self.name = name
@@ -64,33 +64,66 @@ class Character():
     
 
 
-
+# three subclasses for each type of character
 class Rogue(Character):
-    def __init__(self, name, stamina):
+    def __init__(self, name):
         super().__init__(name)
-        self.stamina = stamina
+        self.stamina = 100
         self.health += 10
 
     def add(self): # to test if the ult system works
         self.ult += 10
         print(f'ult points now are {self.ult}')
 
+
+
     def L_ATK(self, victim):
-        damage = 50
+        damage = 3
         #print(f'{self.name} used a light attack')
         print(f"{self.name} attacks {victim.name} with a light attack. \n")
+        print(f'{self.stamina} stamina points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
             print(f'{self.name} won!')
             place.character_death()
 
-    def M_ATK():
-        pass
-    def H_ATK():
-        pass
-    def special(self):
-        pass
+    def M_ATK(self, victim):
+        damage = 5
+        self.stamina -= damage
+
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.stamina} stamina points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+    
+    def H_ATK(self, victim):
+        damage = 10
+        self.stamina -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a heavy attack. \n")
+        print(f'{self.stamina} stamina points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+    
+    
+    def special(self, victim):
+        damage = 20
+        self.stamina -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a light attack. \n")
+        print(f'{self.stamina} stamina points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
 
 
     def check_stats(self):
@@ -101,19 +134,66 @@ class Rogue(Character):
 
 
 class Mage(Character):
-    def __init__(self, name, mana):
+    def __init__(self, name):
         super().__init__(name)
-        self.mana = mana
+        self.mana = 100
         self.health -= 20
 
-    def L_ATK():
-        pass
-    def M_ATK(self):
-        print(f'{self.name} used a medium attack')
-    def H_ATK():
-        pass
-    def special():
-        pass
+
+
+    def L_ATK(self, victim):
+        damage = 5
+        self.mana -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.mana} mana points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+    
+    
+    def M_ATK(self, victim):
+        damage = 8
+        self.mana -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.mana} mana points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+    
+    
+    def H_ATK(self, victim):
+        damage = 12
+        self.mana -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.mana} mana points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+   
+   
+   
+    def special(self, victim):
+        damage = 5
+        self.mana -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.mana} mana points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+
+
 
     def check_stats(self):
         super().check_stats()
@@ -123,21 +203,62 @@ class Mage(Character):
 
 
 class Warrior(Character):
-    def __init__(self, name,  strength):
+    def __init__(self, name):
         super().__init__(name)
-        self.strength = strength
+        self.strength = 100
         self.health += 30
     
 
-    def L_ATK():
-        pass
-    def M_ATK():
-        pass
-    def H_ATK():
-        pass
-    def special():
-        pass
+    def L_ATK(self, victim):
+        damage = 5
+        self.strength -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.strength} strength points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
     
+    def M_ATK(self, victim):
+        damage = 5
+        self.strength -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.strength} strength points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+    
+    def H_ATK(self, victim):
+        damage = 5
+        self.strength -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.strength} strength points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+    
+    
+    def special(self, victim):
+        damage = 5
+        self.strength -= damage
+        
+        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f'{self.strength} strength points left!')
+
+        victim.got_hit(damage)
+        if victim.alive == False:
+            print(f'{self.name} won!')
+            place.character_death()
+    
+
 
     def check_stats(self):
         super().check_stats()
@@ -153,7 +274,7 @@ class Warrior(Character):
 
 
 
-
+# Class for the arena itself where the game also takes place in
 class Arena():
     def __init__(self):
         self.yaya = 0
@@ -217,7 +338,7 @@ class Arena():
     def character_death(self):
         self.running = False
         self.dead_character = True
-        print('done')
+        #print('done')
 
 
 
@@ -262,7 +383,7 @@ class Arena():
 
 
 
-
+# might remove later ngl
 class diffArena(Arena):
     def __init__(self):
         super().__init__()
@@ -278,12 +399,13 @@ class diffArena(Arena):
 
 
 
+#old code <3
 
-new = Character('Michelle')
-silly = Rogue('two dolla', 20)
+#new = Character('Michelle')
+#silly = Rogue('two dolla', 20)
 #new.creation()
-silly.add()
-silly.add()
+#silly.add()
+#silly.add()
 
 
 
@@ -291,21 +413,25 @@ silly.add()
 
 ########################################################
 
+instructions = "  Each player gets to pick a fighter and an arena to fight in. \n  On each turn you have three attack options, and a special attack once you have enough ult points. \n  You could even use shields or skip your turn entirely! \n  But beware, you get one move only, so think wisely!\n"
 
-
-
+# Choice for the game to start, introduces the game etc
 beginning = True
 
 
-print('Welcome and hello! This game is a turn based dnd inspired game!')
-start = int(input('To start the game press 1, press 2 for instructions again or 3 to quit.'))
+print('Welcome and hello! This game is a turn based dnd inspired game! \nAnd the instructions are:')
+print(instructions)
+
+
 while beginning == True:
+    start = int(input('To start the game press 1, press 2 for instructions again or 3 to quit.'))
     if start == 1:
         pass
         beginning = False
     elif start == 2:
-        pass
+        print(instructions)
     elif start == 3:
+        print("Sad to see you go, but hope you'd be up for a game coon :)")
         pass
         quit
     else:
@@ -332,12 +458,12 @@ player_1 = 'player_1'
 player_2 = 'player_2'
 
 place.character_choice(player_1)
-player_1 = type(choice_name, 20)
+player_1 = type(choice_name)
 #print(player_1)
 #print(silly)
 
 place.character_choice(player_2)
-player_2 = type(choice_name, 10)
+player_2 = type(choice_name)
 #print(player_2)
 
 
