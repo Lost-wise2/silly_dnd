@@ -30,13 +30,13 @@ class Character():
 
     def shield(self):
         self.shield = True
-        print(f'{self.name} used shields')
+        print(f'{self.name} used shields \n')
 
     def skip_turn(self):
-        print(f'{self.name} has skipped their turn')
+        print(f'{self.name} has skipped their turn \n')
 
     def check_stats(self):
-        print(f'{self.name}, has {self.health} hp left, {self.ult} ult points')
+        print(f'{self.name}, has {self.health} hp left, {self.ult} ult points \n')
 
     def is_alive(self):
         if self.health <= 0:
@@ -48,7 +48,7 @@ class Character():
         
         self.health -= damage
 
-        print(f"{self.name} took {damage} damange, their health is now {self.health}")
+        print(f"{self.name} took {damage} damange, their health is now {self.health} \n")
         self.is_alive()
 
 
@@ -77,8 +77,8 @@ class Rogue(Character):
 
     def L_ATK(self, victim):
         damage = 50
-        print(f'{self.name} used a light attack')
-        print(f"{self.name} attacks {victim.name}.")
+        #print(f'{self.name} used a light attack')
+        print(f"{self.name} attacks {victim.name} with a light attack. \n")
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -95,7 +95,7 @@ class Rogue(Character):
 
     def check_stats(self):
         super().check_stats()
-        print(f'And {self.stamina} stamina points left.')
+        print(f'And {self.stamina} stamina points left. \n')
 
 
 
@@ -177,8 +177,8 @@ class Arena():
         global type
         self.player = player
         print(f'{self.player} select your style:')
-        choice_type = int(input('1. for rogue, 2. for mage and 3. for warrior'))
-        choice_name = input('Insert name for character:')
+        choice_type = int(input('1. for rogue, 2. for mage and 3. for warrior \n'))
+        choice_name = input('Insert name for character: \n')
         if choice_type == 1:
             type = Rogue
         elif choice_type == 2:
@@ -191,7 +191,7 @@ class Arena():
 
 
     def choice(self, person, victim):
-        yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult, 9. to check stats'))
+        yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult, 9. to check stats \n'))
         self.yaya = yaya
         if yaya == 0:
             person.shield()
@@ -227,7 +227,7 @@ class Arena():
         self.running = True
         round = 1
         while self.running == True:
-            print("Round", round, "has begun.")
+            print("Round", round, "has begun. \n")
             
             place.choice(player_1, player_2)
             #player_2.is_alive()
@@ -247,7 +247,7 @@ class Arena():
             #    running = False
             #else:
             #    pass
-            print("Round", round, "has ended.")
+            print("Round", round, "has ended. \n")
             round += 1
 
     
