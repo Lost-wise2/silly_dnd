@@ -28,7 +28,7 @@ class Character():
     #def creation(self):
         #print(f'Character {self.name} has joined us, being a {self.type}.')
 
-    def shield(self):
+    def shields(self):
         self.shield = True
         print(f'{self.name} used shields \n')
 
@@ -36,7 +36,11 @@ class Character():
         print(f'{self.name} has skipped their turn \n')
 
     def check_stats(self):
-        print(f'{self.name}, has {self.health} hp left, {self.ult} ult points \n')
+        if self.shield == True:
+            print(f'{self.name}, has {self.health} hp left, {self.ult} ult points.')
+            print('Shields are active! \n')
+        else:
+            print(f'{self.name}, has {self.health} hp left, {self.ult} ult points \n')
 
     def is_alive(self):
         if self.health <= 0:
@@ -46,9 +50,14 @@ class Character():
 
     def got_hit(self, damage):
         
-        self.health -= damage
-
-        print(f"{self.name} took {damage} damange, their health is now {self.health} \n")
+        if self.shield == True:
+            damage = int(damage*0.75)
+            self.health -= damage
+            self.shield = False
+            print(f"{self.name} has sheilds active! And only took {damage} damange instead, their health is now {self.health} \n")
+        else:
+            self.health -= damage
+            print(f"{self.name} took {damage} damange, their health is now {self.health} \n")
         self.is_alive()
 
 
@@ -312,24 +321,31 @@ class Arena():
 
 
     def choice(self, person, victim):
-        yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult, 9. to check stats \n'))
-        self.yaya = yaya
-        if yaya == 0:
-            person.shield()
-        elif yaya == 1:
-            person.L_ATK(victim)
-        elif yaya == 2:
-            person.M_ATK(victim)
-        elif yaya == 3:
-            pass
-        elif yaya == 4:
-            pass
-        elif yaya == 9:
-            person.check_stats()
-        elif yaya == 10:
-            person.skip_turn()
-        else:
-            print('uh oh')
+        #self.yaya = yaya
+        making_choice = True
+        while making_choice == True:
+            yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult, 9. to check stats \n'))
+            if yaya == 0:
+                person.shields()
+                making_choice = False
+            elif yaya == 1:
+                person.L_ATK(victim)
+                making_choice = False
+            elif yaya == 2:
+                person.M_ATK(victim)
+                making_choice = False
+            elif yaya == 3:
+                person.H_ATK(victim)
+                making_choice = False
+            elif yaya == 4:
+                pass
+            elif yaya == 9:
+                person.check_stats()
+            elif yaya == 10:
+                person.skip_turn()
+                making_choice = False
+            else:
+                print('uh oh')
     
 
 
