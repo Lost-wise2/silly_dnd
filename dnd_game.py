@@ -86,10 +86,21 @@ class Rogue(Character):
         self.health += 10
         self.enough = 5
 
-        self.neededL = 0
-        self.neededM = 0
-        self.neededH = 0
-        self.neededS = 0
+        self.specific = 'stamina'
+
+
+        self.needed = {
+            'L' : 10,
+            'M' : 0,
+            'H' : 0,
+            'S' : 0,
+
+        }
+        self.got_it = False
+        #self.neededL = 0
+        #self.neededM = 0
+        #self.neededH = 0
+        #self.neededS = 0
 
 
         
@@ -98,7 +109,11 @@ class Rogue(Character):
         self.ult += 10
         print(f'ult points now are {self.ult}')
 
-
+    def check(self, what):
+        if self.stamina >= self.needed[what]:
+            self.got_it = True
+        else:
+            self.got_it = False
 
     def L_ATK(self, victim):
         damage = 3
@@ -185,15 +200,26 @@ class Rogue(Character):
 class Mage(Character):
     def __init__(self, name):
         super().__init__(name)
-        self.mana = 100
+        self.mana = 2
         self.health -= 20
         self.enough = 20
 
-        self.neededL = 0
-        self.neededM = 0
-        self.neededH = 0
-        self.neededS = 0
+        self.specific = 'mana'
 
+        self.needed = {
+            'L' : 3,
+            'M' : 0,
+            'H' : 0,
+            'S' : 0,
+
+        }
+        self.got_it = False
+
+    def check(self, what):
+        if self.mana >= self.needed[what]:
+            self.got_it = True
+        else:
+            self.got_it = False
 
 
     def L_ATK(self, victim):
@@ -289,11 +315,23 @@ class Warrior(Character):
         self.health += 30
         self.enough = 20
 
-        self.neededL = 0
-        self.neededM = 0
-        self.neededH = 0
-        self.neededS = 0
+        self.specific = 'strength'
+
+        self.needed = {
+            'L' : 0,
+            'M' : 0,
+            'H' : 0,
+            'S' : 0,
+
+        }
+        self.got_it = False
     
+
+    def check(self, what):
+        if self.strength >= self.needed[what]:
+            self.got_it = True
+        else:
+            self.got_it = False
 
     def L_ATK(self, victim):
         damage = 5
@@ -431,23 +469,40 @@ class Arena():
                 person.shields()
                 making_choice = False
             elif yaya == 1:
-                if person.stamina >= person.needed:
+                person.check('L')
+                if person.got_it == True:
                     person.L_ATK(victim)
                     making_choice = False
                 else:
-                    print(f'Sorry but {person.name} does not have enoygh stmaina points')
+                    print(f'Sorry but {person.name} does not have enoygh {person.specific} points')
+
             elif yaya == 2:
-                person.M_ATK(victim)
-                making_choice = False
-            elif yaya == 3:
-                person.H_ATK(victim)
-                making_choice = False
-            elif yaya == 4:
-                if person.ult >= person.enough:
-                    person.special(victim)
+                person.check('M')
+                if person.got_it == True:
+                    person.M_ATK(victim)
                     making_choice = False
                 else:
+                    print(f'Sorry but {person.name} does not have enoygh {person.specific} points')
+
+            elif yaya == 3:
+                person.check('H')
+                if person.got_it == True:
+                    person.H_ATK(victim)
+                    making_choice = False
+                else:
+                    print(f'Sorry but {person.name} does not have enoygh {person.specific} points')
+                    
+            elif yaya == 4:
+                if person.ult >= person.enough:
+                    person.check('S')
+                    if person.got_it == True:
+                        person.special(victim)
+                        making_choice = False
+                    else:
+                        print(f'Sorry but {person.name} does not have enoygh {person.specific} points')    
+                else:
                     print(f'Sorry but {person.name} does not have enough ult points')
+
             elif yaya == 9:
                 person.check_stats()
             elif yaya == 10:
