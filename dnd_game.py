@@ -1,7 +1,9 @@
 #Tehee
 import random
+import time
 
 print(random.randint(1,10))
+
 
 print('yaya')
 
@@ -306,7 +308,7 @@ class Arena():
         global choice_name
         global type
         self.player = player
-        print(f'{self.player} select your style:')
+        print(f'\n{self.player} select your style:')
         choice_type = int(input('1. for rogue, 2. for mage and 3. for warrior \n'))
         choice_name = input('Insert name for character: \n')
         if choice_type == 1:
@@ -365,8 +367,10 @@ class Arena():
         round = 1
         while self.running == True:
             print("Round", round, "has begun. \n")
+            time.sleep(1)
             
             place.choice(player_1, player_2)
+            time.sleep(2)
             #player_2.is_alive()
             #if player_2.alive == False:
                 #print('Round ended, Player 2 won!')
@@ -378,6 +382,7 @@ class Arena():
                 break
             
             place.choice(player_2, player_1)
+            time.sleep(2)
             #player_1.is_alive()
             #if player_1.alive == False:
                 #print('Round ended, Player 1 won!')
@@ -386,6 +391,7 @@ class Arena():
             #    pass
             print("Round", round, "has ended. \n")
             round += 1
+            time.sleep(2)
 
     
         
@@ -505,3 +511,4 @@ place.game()
 
 
 # all thats left now is to special arenas, and finsih all the types of attacks and ults
+#and private variables
