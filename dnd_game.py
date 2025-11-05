@@ -20,8 +20,9 @@ class Character():
     def __init__(self, name):
         self.name = name
 
-        self.health = 100
-        self.ult = 0
+        self._health = 100 ##
+        self._ult = 0 ##
+
         self.alive = True
         self.shield = False
 
@@ -44,14 +45,14 @@ class Character():
 
     def check_stats(self):
         if self.shield == True:
-            print(f'{self.name}, has {self.health} hp left, {self.ult} ult points.')
+            print(f'{self.name}, has {self._health} hp left, {self._ult} ult points.')
             print('Shields are active! \n')
         else:
-            print(f'{self.name}, has {self.health} hp left, {self.ult} ult points \n')
+            print(f'{self.name}, has {self._health} hp left, {self._ult} ult points \n')
 
     def is_alive(self):
-        if self.health <= 0:
-            self.health = 0
+        if self._health <= 0:
+            self._health = 0
             self.alive = False
 
 
@@ -59,12 +60,12 @@ class Character():
         
         if self.shield == True:
             damage = int(damage*0.75)
-            self.health -= damage
+            self._health -= damage
             self.shield = False
-            print(f"{self.name} has sheilds active! And only took {damage} damange instead, their health is now {self.health} \n")
+            print(f"{self.name} has sheilds active! And only took {damage} damange instead, their health is now {self._health} \n")
         else:
-            self.health -= damage
-            print(f"{self.name} took {damage} damange, their health is now {self.health} \n")
+            self._health -= damage
+            print(f"{self.name} took {damage} damange, their health is now {self._health} \n")
         self.is_alive()
 
 
@@ -84,9 +85,9 @@ class Character():
 class Rogue(Character):
     def __init__(self, name):
         super().__init__(name)
-        self.stamina = 3
-        self.health += 10
-        self.enough = 5
+        self._stamina = 3 ##
+        self._health += 10
+        self._enough = 5 ##
 
         self.specific = 'stamina'
 
@@ -108,11 +109,11 @@ class Rogue(Character):
         
 
     def add(self): # to test if the ult system works
-        self.ult += 10
-        print(f'ult points now are {self.ult}')
+        self._ult += 10
+        print(f'ult points now are {self._ult}')
 
     def check(self, what):
-        if self.stamina >= self.needed[what]:
+        if self._stamina >= self.needed[what]:
             self.got_it = True
         else:
             self.got_it = False
@@ -124,11 +125,11 @@ class Rogue(Character):
         else:
             pass
 
-        self.ult += 4
+        self._ult += 4
         
         #print(f'{self.name} used a light attack')
         print(f"{self.name} attacks {victim.name} with a light attack. \n")
-        print(f'{self.stamina} stamina points left!')
+        print(f'{self._stamina} stamina points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -142,11 +143,11 @@ class Rogue(Character):
         else:
             pass
 
-        self.stamina -= damage
-        self.ult += 1
+        self._stamina -= damage
+        self._ult += 1
 
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.stamina} stamina points left!')
+        print(f'{self._stamina} stamina points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -160,11 +161,11 @@ class Rogue(Character):
         else:
             pass
 
-        self.stamina -= damage
-        self.ult += 1
+        self._stamina -= damage
+        self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a heavy attack. \n")
-        print(f'{self.stamina} stamina points left!')
+        print(f'{self._stamina} stamina points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -179,11 +180,11 @@ class Rogue(Character):
         else:
             pass
 
-        self.stamina -= damage
-        self.ult -= self.enough
+        self._stamina -= damage
+        self._ult -= self._enough
         
         print(f"{self.name} attacks {victim.name} with a light attack. \n")
-        print(f'{self.stamina} stamina points left! and {self.ult} ult points left!')
+        print(f'{self._stamina} stamina points left! and {self._ult} ult points left!')
         
 
         victim.got_hit(damage)
@@ -194,7 +195,7 @@ class Rogue(Character):
 
     def check_stats(self):
         super().check_stats()
-        print(f'And {self.stamina} stamina points left. \n')
+        print(f'And {self._stamina} stamina points left. \n')
 
 
 
@@ -202,9 +203,9 @@ class Rogue(Character):
 class Mage(Character):
     def __init__(self, name):
         super().__init__(name)
-        self.mana = 2
-        self.health -= 20
-        self.enough = 20
+        self._mana = 2 ##
+        self._health -= 20
+        self._enough = 20 ##
 
         self.specific = 'mana'
 
@@ -218,7 +219,7 @@ class Mage(Character):
         self.got_it = False
 
     def check(self, what):
-        if self.mana >= self.needed[what]:
+        if self._mana >= self.needed[what]:
             self.got_it = True
         else:
             self.got_it = False
@@ -231,11 +232,11 @@ class Mage(Character):
         else:
             pass
 
-        self.mana -= damage
-        self.ult += 1
+        self._mana -= damage
+        self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.mana} mana points left!')
+        print(f'{self._mana} mana points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -250,11 +251,11 @@ class Mage(Character):
         else:
             pass
 
-        self.mana -= damage
-        self.ult += 1
+        self._mana -= damage
+        self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.mana} mana points left!')
+        print(f'{self._mana} mana points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -269,11 +270,11 @@ class Mage(Character):
         else:
             pass
 
-        self.mana -= damage
-        self.ult += 1
+        self._mana -= damage
+        self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.mana} mana points left!')
+        print(f'{self._mana} mana points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -289,11 +290,11 @@ class Mage(Character):
         else:
             pass
 
-        self.mana -= damage
-        self.ult -= self.enough
+        self._mana -= damage
+        self._ult -= self._enough
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.mana} mana points left! and {self.ult} ult points left!')
+        print(f'{self._mana} mana points left! and {self._ult} ult points left!')
         
 
         victim.got_hit(damage)
@@ -305,7 +306,7 @@ class Mage(Character):
 
     def check_stats(self):
         super().check_stats()
-        print(f'And {self.mana} mana points left.')
+        print(f'And {self._mana} mana points left.')
 
 
 
@@ -313,9 +314,9 @@ class Mage(Character):
 class Warrior(Character):
     def __init__(self, name):
         super().__init__(name)
-        self.strength = 100
-        self.health += 30
-        self.enough = 20
+        self._strength = 100 ##
+        self._health += 30
+        self._enough = 20 ##
 
         self.specific = 'strength'
 
@@ -330,7 +331,7 @@ class Warrior(Character):
     
 
     def check(self, what):
-        if self.strength >= self.needed[what]:
+        if self._strength >= self.needed[what]:
             self.got_it = True
         else:
             self.got_it = False
@@ -342,11 +343,11 @@ class Warrior(Character):
         else:
             pass
 
-        self.strength -= damage
-        self.ult += 1
+        self._strength -= damage
+        self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.strength} strength points left!')
+        print(f'{self._strength} strength points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -360,11 +361,11 @@ class Warrior(Character):
         else:
             pass
 
-        self.strength -= damage
-        self.ult += 1
+        self._strength -= damage
+        self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.strength} strength points left!')
+        print(f'{self._strength} strength points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -378,11 +379,11 @@ class Warrior(Character):
         else:
             pass
 
-        self.strength -= damage
-        self.ult += 1
+        self._strength -= damage
+        self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.strength} strength points left!')
+        print(f'{self._strength} strength points left!')
 
         victim.got_hit(damage)
         if victim.alive == False:
@@ -397,11 +398,11 @@ class Warrior(Character):
         else:
             pass
         
-        self.strength -= damage
-        self.ult -= self.enough
+        self._strength -= damage
+        self._ult -= self._enough
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
-        print(f'{self.strength} strength points left! and {self.ult} ult points left!')
+        print(f'{self._strength} strength points left! and {self._ult} ult points left!')
         
 
         victim.got_hit(damage)
@@ -413,7 +414,7 @@ class Warrior(Character):
 
     def check_stats(self):
         super().check_stats()
-        print(f'And {self.strength} strength points left.')
+        print(f'And {self._strength} strength points left.')
 
 
 ####################################
@@ -495,7 +496,7 @@ class Arena():
                     print(f'Sorry but {person.name} does not have enoygh {person.specific} points')
                     
             elif yaya == 4:
-                if person.ult >= person.enough:
+                if person._ult >= person._enough:
                     person.check('S')
                     if person.got_it == True:
                         person.special(victim)
@@ -590,13 +591,13 @@ class Arena():
 
 
 # might remove later ngl
-class diffArena(Arena):
-    def __init__(self):
-        super().__init__()
+#class diffArena(Arena):
+#    def __init__(self):
+#        super().__init__()
 
-    def arenas(self, diff):
-        if diff == 1:
-            pass
+#    def arenas(self, diff):
+#        if diff == 1:
+#            pass
 
 
 ################################33
@@ -668,9 +669,35 @@ player_1 = type(choice_name)
 #print(player_1)
 #print(silly)
 
+
+
+#used to test protected variables
+#print(player_1._health)
+#player_1._health = 20
+#print(player_1._health)
+
+
+
+
+
+
+
+
+
+
+
 place.character_choice(player_2)
 player_2 = type(choice_name)
 #print(player_2)
+
+
+
+
+
+
+
+
+
 
 
 
