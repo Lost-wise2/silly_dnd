@@ -631,7 +631,7 @@ class Arena():
 
             place.game()
 
-            keep = int(input('Want to play again?'))
+            keep = int(input('Want to play again? \n1. for yes. \n2. for no.'))
             if keep == 1:
                 del player_1
                 del player_2
