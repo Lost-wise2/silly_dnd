@@ -48,7 +48,12 @@ class Character():
 
 
     def got_hit(self, damage):
-        
+
+
+        if dodging == True:
+            damage = 0
+            dodging = False
+            print(f'{self.name} had dodged the attack! They got no damage!')        
         if self.shield == True:
             damage = int(damage*0.75)
             self._health -= damage
@@ -82,6 +87,10 @@ class Rogue(Character):
 
         self.specific = 'stamina'
 
+        global dodging
+        dodging = False
+        
+
 
         self.needed = {
             'L' : 0,
@@ -105,7 +114,7 @@ class Rogue(Character):
             self.got_it = False
 
     def L_ATK(self, victim):
-        damage = 5
+        damage = 7
         if rogue_buff == True:
             int(damage *1.5)
         else:
@@ -123,7 +132,7 @@ class Rogue(Character):
             place.character_death()
 
     def M_ATK(self, victim):
-        damage = 13
+        damage = 15
         if rogue_buff == True:
             int(damage *1.5)
         else:
@@ -141,7 +150,7 @@ class Rogue(Character):
             place.character_death()
     
     def H_ATK(self, victim):
-        damage = 18
+        damage = 20
         if rogue_buff == True:
             int(damage *1.5)
         else:
@@ -150,7 +159,7 @@ class Rogue(Character):
         self._stamina -= self.needed['H']
         self._ult += 3
         
-        print(f"{self.name} attacks {victim.name} with a dagger! \n")
+        print(f"{self.name} attacks {victim.name} with an arrow shot! \n")
         print(f'{self._stamina} stamina points left!')
 
         victim.got_hit(damage)
@@ -160,6 +169,9 @@ class Rogue(Character):
     
     
     def special(self, victim):
+        global dodging
+        dodging = True
+
         damage = 20
         if rogue_buff == True:
             int(damage *1.5)
@@ -169,7 +181,7 @@ class Rogue(Character):
         self._stamina -= self.needed['S']
         self._ult -= self._enough
         
-        print(f"{self.name} teleports behind {victim.name} and knocks them down!! \n")
+        print(f"{self.name} teleports behind {victim.name} and stabs them in the back!! \n")
         print(f'{self._stamina} stamina points left! and {self._ult} ult points left!')
         
 
@@ -286,7 +298,7 @@ class Mage(Character):
         self._mana -= self.needed['S']
         self._ult -= self._enough
         
-        print(f"{self.name} absorbs {victim.name}'s health and heals themselves with it! \n")
+        print(f"{self.name} absorbs {victim.name}'s health and heals themselves with it!! \n")
         print(f'{self._mana} mana points left! and {self._ult} ult points left!')
         
 
@@ -403,7 +415,7 @@ class Warrior(Character):
         self._strength -= self.needed['S']
         self._ult -= self._enough
         
-        print(f"{self.name} uses their own life force to attack {victim.name} with a cursed battleaxe! \n")
+        print(f"{self.name} uses their own life force to attack {victim.name} with a cursed battleaxe!! \n")
         print(f'{self._strength} strength points left! and {self._ult} ult points left!')
         
 
@@ -578,12 +590,13 @@ class Arena():
         global player_2
 
         instructions = "  Each player gets to pick a fighter and an arena to fight in. \n  On each turn you have three attack options, and a special attack once you have enough ult points. \n  You could even use shields or skip your turn entirely! \n  But beware, you get one move only, so think wisely!\n"
-
+        instructions2 ="  The rogue is a cunning thief, using their agility and fast action to dodge attacks and catch their prey by surprise and strike them down where they least expected it. \n  The mage is born with the gift of magic, using their power to call the forces of nature to aid them in battle from afar and heal themselves when needed. \n  The warrior is a brave soldier driven by their strong sense of justice cursed with axe that draws from their lifeforce to deal extra damage to whoever stands in their way.\n"
         beginning = True
 
 
         print('Welcome and hello! This game is a turn based dnd inspired game! \nAnd the instructions are:')
         print(instructions)
+        print(instructions2)
 
         while beginning == True:
             start = int(input('To start the game press 1, press 2 for instructions again or 3 to quit.'))
@@ -592,6 +605,7 @@ class Arena():
                 beginning = False
             elif start == 2:
                 print(instructions)
+                print(instructions2)
             elif start == 3:
                 print("Sad to see you go, but hope you'd be up for a game coon :)")
                 quit()
