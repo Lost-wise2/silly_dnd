@@ -1,14 +1,5 @@
 #Tehee
-import random
 import time
-
-print(random.randint(1,10))
-
-
-print('yaya')
-
-
-
 
 rogue_buff = False
 mage_buff = False
@@ -35,8 +26,6 @@ class Character():
         # health and other attributes such as mana and agility are predetermined, 
         # cannot ask user for imput bc they would obvi pick an overpowerd stats
 
-    #def creation(self):
-        #print(f'Character {self.name} has joined us, being a {self.type}.')
 
     def shields(self):
         self.shield = True
@@ -87,32 +76,27 @@ class Character():
 class Rogue(Character):
     def __init__(self, name):
         super().__init__(name)
-        self._stamina = 3 ##
+        self._stamina = 80 ##
         self._health += 10
-        self._enough = 5 ##
+        self._enough = 10 ##
 
         self.specific = 'stamina'
 
 
         self.needed = {
-            'L' : 10,
-            'M' : 0,
-            'H' : 0,
+            'L' : 0,
+            'M' : 5,
+            'H' : 10,
             'S' : 0,
 
         }
         self.got_it = False
-        #self.neededL = 0
-        #self.neededM = 0
-        #self.neededH = 0
-        #self.neededS = 0
 
 
-        
+    def shields(self):
+        super().shields()
+        self._stamina += 9
 
-    def add(self): # to test if the ult system works
-        self._ult += 10
-        print(f'ult points now are {self._ult}')
 
     def check(self, what):
         if self._stamina >= self.needed[what]:
@@ -129,7 +113,6 @@ class Rogue(Character):
 
         self._ult += 4
         
-        #print(f'{self.name} used a light attack')
         print(f"{self.name} attacks {victim.name} with a light attack. \n")
         print(f'{self._stamina} stamina points left!')
 
@@ -145,7 +128,7 @@ class Rogue(Character):
         else:
             pass
 
-        self._stamina -= damage
+        self._stamina -= self.needed['M']
         self._ult += 1
 
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -163,7 +146,7 @@ class Rogue(Character):
         else:
             pass
 
-        self._stamina -= damage
+        self._stamina -= self.needed['H']
         self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a heavy attack. \n")
@@ -182,7 +165,7 @@ class Rogue(Character):
         else:
             pass
 
-        self._stamina -= damage
+        self._stamina -= self.needed['S']
         self._ult -= self._enough
         
         print(f"{self.name} attacks {victim.name} with a light attack. \n")
@@ -218,7 +201,13 @@ class Mage(Character):
             'S' : 0,
 
         }
+
         self.got_it = False
+
+    def shields(self):
+        super().shields()
+        self._mana += 9
+
 
     def check(self, what):
         if self._mana >= self.needed[what]:
@@ -234,7 +223,7 @@ class Mage(Character):
         else:
             pass
 
-        self._mana -= damage
+        self._mana -= self.needed['L']
         self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -253,7 +242,7 @@ class Mage(Character):
         else:
             pass
 
-        self._mana -= damage
+        self._mana -= self.needed['M']
         self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -272,7 +261,7 @@ class Mage(Character):
         else:
             pass
 
-        self._mana -= damage
+        self._mana -= self.needed['H']
         self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -292,7 +281,7 @@ class Mage(Character):
         else:
             pass
 
-        self._mana -= damage
+        self._mana -= self.needed['S']
         self._ult -= self._enough
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -318,7 +307,7 @@ class Warrior(Character):
         super().__init__(name)
         self._strength = 100 ##
         self._health += 30
-        self._enough = 20 ##
+        self._enough = 15 ##
 
         self.specific = 'strength'
 
@@ -329,8 +318,14 @@ class Warrior(Character):
             'S' : 0,
 
         }
+
         self.got_it = False
     
+
+    def shields(self):
+        super().shields()
+        self._strength += 9
+
 
     def check(self, what):
         if self._strength >= self.needed[what]:
@@ -345,7 +340,7 @@ class Warrior(Character):
         else:
             pass
 
-        self._strength -= damage
+        self._strength -= self.needed['L']
         self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -363,7 +358,7 @@ class Warrior(Character):
         else:
             pass
 
-        self._strength -= damage
+        self._strength -= self.needed['M']
         self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -381,7 +376,7 @@ class Warrior(Character):
         else:
             pass
 
-        ##############################self._strength -= damage
+        self._strength -= self.needed['H']
         self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -400,7 +395,7 @@ class Warrior(Character):
         else:
             pass
         
-        self._strength -= damage
+        self._strength -= self.needed['S']
         self._ult -= self._enough
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -433,17 +428,7 @@ class Arena():
     def __init__(self):
         self.yaya = 0
         self.dead_character = False
-        #self.running = True
-
-
-    #def how_many(self):
-    #    global player_count
-    #    how_player_count = int(input('how many?'))
-    #    x = 0
-    #    player_count = []
-    #    while x < how_player_count:
-    #        x += 1
-    #        player_count.append(x)
+        
 
 
 
@@ -466,7 +451,6 @@ class Arena():
 
 
     def choice(self, person, victim):
-        #self.yaya = yaya
         making_choice = True
         while making_choice == True:
             yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult, 9. to check stats \n'))
@@ -517,6 +501,8 @@ class Arena():
                 print('uh oh')
     
 
+
+
     def arena_type(self):
         print('there are three and bla bla ba')
         what_arena = int(input('1. for _, 2. for __, 3. for ___.'))
@@ -543,7 +529,7 @@ class Arena():
     def character_death(self):
         self.running = False
         self.dead_character = True
-        #print('done')
+ 
 
 
 
@@ -558,29 +544,23 @@ class Arena():
             
             place.choice(player_1, player_2)
             time.sleep(2)
-            #player_2.is_alive()
-            #if player_2.alive == False:
-                #print('Round ended, Player 2 won!')
-            #    running = False
-            #else:
-            #    pass
+            
             
             if self.dead_character == True:
                 self.dead_character = False
                 break
             
+
+
             place.choice(player_2, player_1)
             time.sleep(2)
 
             if self.dead_character == True:
                 self.dead_character = False
                 break
-            #player_1.is_alive()
-            #if player_1.alive == False:
-                #print('Round ended, Player 1 won!')
-            #    running = False
-            #else:
-            #    pass
+            
+            
+
             print("Round", round, "has ended. \n")
             round += 1
             time.sleep(2)
@@ -656,151 +636,5 @@ class Arena():
 
 
 
-    
-        
-        
-            
-            
-        
-
-
-
-
-
-
-# might remove later ngl
-#class diffArena(Arena):
-#    def __init__(self):
-#        super().__init__()
-
-#    def arenas(self, diff):
-#        if diff == 1:
-#            pass
-
-
-################################33
-
-
-
-
-
-#old code <3
-
-#new = Character('Michelle')
-#silly = Rogue('two dolla', 20)
-#new.creation()
-#silly.add()
-#silly.add()
-
-
-
-
-
-########################################################
-
-############################################              instructions = "  Each player gets to pick a fighter and an arena to fight in. \n  On each turn you have three attack options, and a special attack once you have enough ult points. \n  You could even use shields or skip your turn entirely! \n  But beware, you get one move only, so think wisely!\n"
-
-# Choice for the game to start, introduces the game etc
-############################################              beginning = True
-
-
-############################################              print('Welcome and hello! This game is a turn based dnd inspired game! \nAnd the instructions are:')
-############################################              print(instructions)
-
-
-############################################              while beginning == True:
-    ############################################              start = int(input('To start the game press 1, press 2 for instructions again or 3 to quit.'))
-    ############################################              if start == 1:
-        ############################################              pass
-        ############################################              beginning = False
-    ############################################              elif start == 2:
-        ############################################              print(instructions)
-    ############################################              elif start == 3:
-        ############################################              print("Sad to see you go, but hope you'd be up for a game coon :)")
-        ############################################              pass
-        ############################################              quit
-    ############################################              else:
-        ############################################              pass
-
-
-
-
-
-
-
-
 place = Arena()
 place.game_run()
-
-#place.choice(silly)
-#place.choice(new)
-
-#place.how_many()
-
-#for player in player_count:
-#    place.character_choice(player)
-
-############################################              player_1 = 'player_1'
-############################################              player_2 = 'player_2'
-
-############################################              place.character_choice(player_1)
-############################################              player_1 = type(choice_name)
-#print(player_1)
-#print(silly)
-
-
-
-#used to test protected variables
-#print(player_1._health)
-#player_1._health = 20
-#print(player_1._health)
-
-
-
-
-
-
-
-
-
-
-
-############################################              place.character_choice(player_2)
-############################################              player_2 = type(choice_name)
-#print(player_2)
-
-
-
-
-
-
-
-
-
-
-
-
-############################################              place.arena_type()
-
-#print(rogue_buff)
-#print(mage_buff)
-#print(warrior_buff)
-
-
-#place.choice(player_1)
-#place.choice(player_2)
-
-
-
-############################################              place.game()
-
-#done = int(input('done? 1. for done, 2. for no'))
-
-#if done == 1:
-#    del player_1
-#else:
-#    print('oj')
-
-
-
-# all thats left now is to special arenas, and finsih all the types of attacks and ults
