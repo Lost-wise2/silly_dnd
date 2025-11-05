@@ -14,6 +14,8 @@ rogue_buff = False
 mage_buff = False
 warrior_buff = False
 
+want_game = True
+
 
 # Main class for the characters
 class Character():
@@ -373,13 +375,13 @@ class Warrior(Character):
             place.character_death()
     
     def H_ATK(self, victim):
-        damage = 5
+        damage = 60
         if warrior_buff == True:
             int(damage *1.5)
         else:
             pass
 
-        self._strength -= damage
+        ##############################self._strength -= damage
         self._ult += 1
         
         print(f"{self.name} attacks {victim.name} with a medium attack. \n")
@@ -564,10 +566,15 @@ class Arena():
             #    pass
             
             if self.dead_character == True:
+                self.dead_character = False
                 break
             
             place.choice(player_2, player_1)
             time.sleep(2)
+
+            if self.dead_character == True:
+                self.dead_character = False
+                break
             #player_1.is_alive()
             #if player_1.alive == False:
                 #print('Round ended, Player 1 won!')
@@ -577,6 +584,77 @@ class Arena():
             print("Round", round, "has ended. \n")
             round += 1
             time.sleep(2)
+
+
+
+
+    def game_run(self):
+        global player_1
+        global player_2
+
+        instructions = "  Each player gets to pick a fighter and an arena to fight in. \n  On each turn you have three attack options, and a special attack once you have enough ult points. \n  You could even use shields or skip your turn entirely! \n  But beware, you get one move only, so think wisely!\n"
+
+        beginning = True
+
+
+        print('Welcome and hello! This game is a turn based dnd inspired game! \nAnd the instructions are:')
+        print(instructions)
+
+        while beginning == True:
+            start = int(input('To start the game press 1, press 2 for instructions again or 3 to quit.'))
+            if start == 1:
+                pass
+                beginning = False
+            elif start == 2:
+                print(instructions)
+            elif start == 3:
+                print("Sad to see you go, but hope you'd be up for a game coon :)")
+                quit()
+            else:
+                pass
+        
+
+
+        while want_game == True:
+            player_1 = 'player_1'
+            player_2 = 'player_2'
+
+
+            place.character_choice(player_1)
+            player_1 = type(choice_name)
+
+            place.character_choice(player_2)
+            player_2 = type(choice_name)
+
+
+            place.arena_type()
+
+            place.game()
+
+            keep = int(input('Want to play again?'))
+            if keep == 1:
+                del player_1
+                del player_2
+
+                beginning = True
+                while beginning == True:
+                    start = int(input('if you want instructions again, press 1, otherwise press 2.'))
+                    if start == 1:
+                        print(instructions)
+                        
+                    elif start == 2:
+                        beginning = False
+                    else:
+                        pass
+
+                
+            elif keep == 2:
+                print('ty for playing')
+                break
+            else:
+                print('huh?')
+
+
 
     
         
@@ -620,29 +698,29 @@ class Arena():
 
 ########################################################
 
-instructions = "  Each player gets to pick a fighter and an arena to fight in. \n  On each turn you have three attack options, and a special attack once you have enough ult points. \n  You could even use shields or skip your turn entirely! \n  But beware, you get one move only, so think wisely!\n"
+############################################              instructions = "  Each player gets to pick a fighter and an arena to fight in. \n  On each turn you have three attack options, and a special attack once you have enough ult points. \n  You could even use shields or skip your turn entirely! \n  But beware, you get one move only, so think wisely!\n"
 
 # Choice for the game to start, introduces the game etc
-beginning = True
+############################################              beginning = True
 
 
-print('Welcome and hello! This game is a turn based dnd inspired game! \nAnd the instructions are:')
-print(instructions)
+############################################              print('Welcome and hello! This game is a turn based dnd inspired game! \nAnd the instructions are:')
+############################################              print(instructions)
 
 
-while beginning == True:
-    start = int(input('To start the game press 1, press 2 for instructions again or 3 to quit.'))
-    if start == 1:
-        pass
-        beginning = False
-    elif start == 2:
-        print(instructions)
-    elif start == 3:
-        print("Sad to see you go, but hope you'd be up for a game coon :)")
-        pass
-        quit
-    else:
-        pass
+############################################              while beginning == True:
+    ############################################              start = int(input('To start the game press 1, press 2 for instructions again or 3 to quit.'))
+    ############################################              if start == 1:
+        ############################################              pass
+        ############################################              beginning = False
+    ############################################              elif start == 2:
+        ############################################              print(instructions)
+    ############################################              elif start == 3:
+        ############################################              print("Sad to see you go, but hope you'd be up for a game coon :)")
+        ############################################              pass
+        ############################################              quit
+    ############################################              else:
+        ############################################              pass
 
 
 
@@ -652,6 +730,7 @@ while beginning == True:
 
 
 place = Arena()
+place.game_run()
 
 #place.choice(silly)
 #place.choice(new)
@@ -661,11 +740,11 @@ place = Arena()
 #for player in player_count:
 #    place.character_choice(player)
 
-player_1 = 'player_1'
-player_2 = 'player_2'
+############################################              player_1 = 'player_1'
+############################################              player_2 = 'player_2'
 
-place.character_choice(player_1)
-player_1 = type(choice_name)
+############################################              place.character_choice(player_1)
+############################################              player_1 = type(choice_name)
 #print(player_1)
 #print(silly)
 
@@ -686,8 +765,8 @@ player_1 = type(choice_name)
 
 
 
-place.character_choice(player_2)
-player_2 = type(choice_name)
+############################################              place.character_choice(player_2)
+############################################              player_2 = type(choice_name)
 #print(player_2)
 
 
@@ -701,7 +780,7 @@ player_2 = type(choice_name)
 
 
 
-place.arena_type()
+############################################              place.arena_type()
 
 #print(rogue_buff)
 #print(mage_buff)
@@ -713,7 +792,7 @@ place.arena_type()
 
 
 
-place.game()
+############################################              place.game()
 
 #done = int(input('done? 1. for done, 2. for no'))
 
