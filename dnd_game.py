@@ -76,7 +76,7 @@ class Character():
 class Rogue(Character):
     def __init__(self, name):
         super().__init__(name)
-        self._stamina = 80 ##
+        self._stamina = 40 ##
         self._health += 10
         self._enough = 10 ##
 
@@ -85,9 +85,9 @@ class Rogue(Character):
 
         self.needed = {
             'L' : 0,
-            'M' : 5,
-            'H' : 10,
-            'S' : 0,
+            'M' : 6,
+            'H' : 15,
+            'S' : 20,
 
         }
         self.got_it = False
@@ -95,7 +95,7 @@ class Rogue(Character):
 
     def shields(self):
         super().shields()
-        self._stamina += 9
+        self._stamina += 8
 
 
     def check(self, what):
@@ -105,15 +105,16 @@ class Rogue(Character):
             self.got_it = False
 
     def L_ATK(self, victim):
-        damage = 3
+        damage = 5
         if rogue_buff == True:
             int(damage *1.5)
         else:
             pass
-
-        self._ult += 4
         
-        print(f"{self.name} attacks {victim.name} with a light attack. \n")
+        self._stamina -= self.needed['L']
+        self._ult += 1
+        
+        print(f"{self.name} attacks {victim.name} with a light punch! \n")
         print(f'{self._stamina} stamina points left!')
 
         victim.got_hit(damage)
@@ -122,16 +123,16 @@ class Rogue(Character):
             place.character_death()
 
     def M_ATK(self, victim):
-        damage = 5
+        damage = 13
         if rogue_buff == True:
             int(damage *1.5)
         else:
             pass
 
         self._stamina -= self.needed['M']
-        self._ult += 1
+        self._ult += 2
 
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} attacks {victim.name} with a spin kick!. \n")
         print(f'{self._stamina} stamina points left!')
 
         victim.got_hit(damage)
@@ -140,16 +141,16 @@ class Rogue(Character):
             place.character_death()
     
     def H_ATK(self, victim):
-        damage = 10
+        damage = 18
         if rogue_buff == True:
             int(damage *1.5)
         else:
             pass
 
         self._stamina -= self.needed['H']
-        self._ult += 1
+        self._ult += 3
         
-        print(f"{self.name} attacks {victim.name} with a heavy attack. \n")
+        print(f"{self.name} attacks {victim.name} with a dagger! \n")
         print(f'{self._stamina} stamina points left!')
 
         victim.got_hit(damage)
@@ -168,13 +169,13 @@ class Rogue(Character):
         self._stamina -= self.needed['S']
         self._ult -= self._enough
         
-        print(f"{self.name} attacks {victim.name} with a light attack. \n")
+        print(f"{self.name} teleports behind {victim.name} and knocks them down!! \n")
         print(f'{self._stamina} stamina points left! and {self._ult} ult points left!')
         
 
         victim.got_hit(damage)
         if victim.alive == False:
-            print(f'{self.name} won!')
+            print(f'With their sharp mind and quick action {self.name} won!')
             place.character_death()
 
 
@@ -188,17 +189,17 @@ class Rogue(Character):
 class Mage(Character):
     def __init__(self, name):
         super().__init__(name)
-        self._mana = 2 ##
+        self._mana = 70 ##
         self._health -= 20
-        self._enough = 20 ##
+        self._enough = 25 ##
 
         self.specific = 'mana'
 
         self.needed = {
-            'L' : 3,
-            'M' : 0,
-            'H' : 0,
-            'S' : 0,
+            'L' : 5,
+            'M' : 12,
+            'H' : 20,
+            'S' : 30,
 
         }
 
@@ -206,7 +207,7 @@ class Mage(Character):
 
     def shields(self):
         super().shields()
-        self._mana += 9
+        self._mana += 15
 
 
     def check(self, what):
@@ -217,16 +218,16 @@ class Mage(Character):
 
 
     def L_ATK(self, victim):
-        damage = 5
+        damage = 10
         if mage_buff == True:
             int(damage *1.5)
         else:
             pass
 
         self._mana -= self.needed['L']
-        self._ult += 1
+        self._ult += 3
         
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} attacks {victim.name} with a small water shot! \n")
         print(f'{self._mana} mana points left!')
 
         victim.got_hit(damage)
@@ -236,16 +237,16 @@ class Mage(Character):
     
     
     def M_ATK(self, victim):
-        damage = 8
+        damage = 18
         if mage_buff == True:
             int(damage *1.5)
         else:
             pass
 
         self._mana -= self.needed['M']
-        self._ult += 1
+        self._ult += 4
         
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} attacks {victim.name} with an electric zap! \n")
         print(f'{self._mana} mana points left!')
 
         victim.got_hit(damage)
@@ -255,16 +256,16 @@ class Mage(Character):
     
     
     def H_ATK(self, victim):
-        damage = 12
+        damage = 22
         if mage_buff == True:
             int(damage *1.5)
         else:
             pass
 
         self._mana -= self.needed['H']
-        self._ult += 1
+        self._ult += 5
         
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} attacks {victim.name} with a fire ball! \n")
         print(f'{self._mana} mana points left!')
 
         victim.got_hit(damage)
@@ -275,7 +276,8 @@ class Mage(Character):
    
    
     def special(self, victim):
-        damage = 5
+        damage = 16
+        self._health += 16
         if mage_buff == True:
             int(damage *1.5)
         else:
@@ -284,13 +286,13 @@ class Mage(Character):
         self._mana -= self.needed['S']
         self._ult -= self._enough
         
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} absorbs {victim.name}'s health and heals themselves with it! \n")
         print(f'{self._mana} mana points left! and {self._ult} ult points left!')
         
 
         victim.got_hit(damage)
         if victim.alive == False:
-            print(f'{self.name} won!')
+            print(f'With their gift of magic and creativity {self.name} won!')
             place.character_death()
 
 
@@ -305,17 +307,17 @@ class Mage(Character):
 class Warrior(Character):
     def __init__(self, name):
         super().__init__(name)
-        self._strength = 100 ##
+        self._strength = 50 ##
         self._health += 30
-        self._enough = 15 ##
+        self._enough = 20 ##
 
         self.specific = 'strength'
 
         self.needed = {
-            'L' : 0,
-            'M' : 0,
-            'H' : 0,
-            'S' : 0,
+            'L' : 10,
+            'M' : 15,
+            'H' : 20,
+            'S' : 25,
 
         }
 
@@ -324,7 +326,7 @@ class Warrior(Character):
 
     def shields(self):
         super().shields()
-        self._strength += 9
+        self._strength += 12
 
 
     def check(self, what):
@@ -334,16 +336,16 @@ class Warrior(Character):
             self.got_it = False
 
     def L_ATK(self, victim):
-        damage = 5
+        damage = 8
         if warrior_buff == True:
             int(damage *1.5)
         else:
             pass
 
         self._strength -= self.needed['L']
-        self._ult += 1
+        self._ult += 4
         
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} attacks {victim.name} with a punch to the stomach! \n")
         print(f'{self._strength} strength points left!')
 
         victim.got_hit(damage)
@@ -352,16 +354,16 @@ class Warrior(Character):
             place.character_death()
     
     def M_ATK(self, victim):
-        damage = 5
+        damage = 20
         if warrior_buff == True:
             int(damage *1.5)
         else:
             pass
 
         self._strength -= self.needed['M']
-        self._ult += 1
+        self._ult += 5
         
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} attacks {victim.name} with a war mace! \n")
         print(f'{self._strength} strength points left!')
 
         victim.got_hit(damage)
@@ -370,16 +372,16 @@ class Warrior(Character):
             place.character_death()
     
     def H_ATK(self, victim):
-        damage = 60
+        damage = 26
         if warrior_buff == True:
             int(damage *1.5)
         else:
             pass
 
         self._strength -= self.needed['H']
-        self._ult += 1
+        self._ult += 6
         
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} attacks {victim.name} with a giant heavy sword! \n")
         print(f'{self._strength} strength points left!')
 
         victim.got_hit(damage)
@@ -389,7 +391,10 @@ class Warrior(Character):
     
     
     def special(self, victim):
-        damage = 5
+        damage = 28
+        self_buff = self._health//7
+        self._health -= self_buff
+        damage += self_buff
         if warrior_buff == True:
             int(damage *1.5)
         else:
@@ -398,13 +403,13 @@ class Warrior(Character):
         self._strength -= self.needed['S']
         self._ult -= self._enough
         
-        print(f"{self.name} attacks {victim.name} with a medium attack. \n")
+        print(f"{self.name} uses their own life force to attack {victim.name} with a cursed battleaxe! \n")
         print(f'{self._strength} strength points left! and {self._ult} ult points left!')
         
 
         victim.got_hit(damage)
         if victim.alive == False:
-            print(f'{self.name} won!')
+            print(f'With their sheer strength and bravery {self.name} won!')
             place.character_death()
     
 
