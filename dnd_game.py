@@ -42,7 +42,7 @@ class Character():
             print(f'{self.name}, has {self._health} hp left, {self._ult} ult points.')
             print('Shields are active! \n')
         else:
-            print(f'{self.name}, has {self._health} hp left, {self._ult} ult points \n')
+            print(f'{self.name}, has {self._health} hp left, {self._ult} ult points currently, you need {self._enough} for your next ult.\n')
 
     def is_alive(self):
         if self._health <= 0:
@@ -196,7 +196,6 @@ class Rogue(Character):
     def check_stats(self):
         super().check_stats()
         print(f'And {self._stamina} stamina points left. \n')
-        print(f'You have currently {self._ult} ult points and need {self._enough} for your ult. \n')
 
 
 
@@ -459,7 +458,7 @@ class Arena():
 
         if to_check.isnumeric() == True:
             to_check = int(to_check) 
-            print(to_check)           
+            #print(to_check)           
             invalid_input = False
             if to_check <= range and to_check > 0:
                 invalid_number = False
@@ -593,10 +592,11 @@ class Arena():
         while invalid_input == True or invalid_number == True:
             what_arena2 = input('\nPlayer 2, please pick your arena. \n1. for the first arena, 2. for the second one or 3. for the last one.')
             place.error_handling(what_arena2, 3)
-        what_arena1 = int(what_arena2)
+        what_arena2 = int(what_arena2)
 
         options.append(what_arena1)
         options.append(what_arena2)
+        
 
         what_arena = random.choice(options)
         options.clear()
