@@ -1,12 +1,18 @@
 #Tehee
+import random
 import time
+print(random.randint(1,2))
 
-rogue_buff = False
-mage_buff = False
-warrior_buff = False
+rogue_debuff = False
+mage_debuff = False
+warrior_debuff = False
 
 want_game = True
 
+dodging = False
+
+invalid_input = True
+invalid_number = True
 
 # Main class for the characters
 class Character():
@@ -31,9 +37,6 @@ class Character():
         self.shield = True
         print(f'{self.name} used shields \n')
 
-    def skip_turn(self):
-        print(f'{self.name} has skipped their turn \n')
-
     def check_stats(self):
         if self.shield == True:
             print(f'{self.name}, has {self._health} hp left, {self._ult} ult points.')
@@ -48,7 +51,7 @@ class Character():
 
 
     def got_hit(self, damage):
-
+        global dodging
 
         if dodging == True:
             damage = 0
@@ -87,8 +90,7 @@ class Rogue(Character):
 
         self.specific = 'stamina'
 
-        global dodging
-        dodging = False
+        
         
 
 
@@ -115,8 +117,8 @@ class Rogue(Character):
 
     def L_ATK(self, victim):
         damage = 7
-        if rogue_buff == True:
-            int(damage *1.5)
+        if rogue_debuff == True:
+            int(damage//1.5)
         else:
             pass
         
@@ -133,8 +135,8 @@ class Rogue(Character):
 
     def M_ATK(self, victim):
         damage = 15
-        if rogue_buff == True:
-            int(damage *1.5)
+        if rogue_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -151,8 +153,8 @@ class Rogue(Character):
     
     def H_ATK(self, victim):
         damage = 20
-        if rogue_buff == True:
-            int(damage *1.5)
+        if rogue_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -173,8 +175,8 @@ class Rogue(Character):
         dodging = True
 
         damage = 20
-        if rogue_buff == True:
-            int(damage *1.5)
+        if rogue_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -194,6 +196,7 @@ class Rogue(Character):
     def check_stats(self):
         super().check_stats()
         print(f'And {self._stamina} stamina points left. \n')
+        print(f'You have currently {self._ult} ult points and need {self._enough} for your ult. \n')
 
 
 
@@ -219,7 +222,7 @@ class Mage(Character):
 
     def shields(self):
         super().shields()
-        self._mana += 15
+        self._mana += 10
 
 
     def check(self, what):
@@ -231,8 +234,8 @@ class Mage(Character):
 
     def L_ATK(self, victim):
         damage = 10
-        if mage_buff == True:
-            int(damage *1.5)
+        if mage_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -250,8 +253,8 @@ class Mage(Character):
     
     def M_ATK(self, victim):
         damage = 18
-        if mage_buff == True:
-            int(damage *1.5)
+        if mage_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -269,8 +272,8 @@ class Mage(Character):
     
     def H_ATK(self, victim):
         damage = 22
-        if mage_buff == True:
-            int(damage *1.5)
+        if mage_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -290,8 +293,8 @@ class Mage(Character):
     def special(self, victim):
         damage = 16
         self._health += 16
-        if mage_buff == True:
-            int(damage *1.5)
+        if mage_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -349,8 +352,8 @@ class Warrior(Character):
 
     def L_ATK(self, victim):
         damage = 8
-        if warrior_buff == True:
-            int(damage *1.5)
+        if warrior_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -367,8 +370,8 @@ class Warrior(Character):
     
     def M_ATK(self, victim):
         damage = 20
-        if warrior_buff == True:
-            int(damage *1.5)
+        if warrior_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -385,8 +388,8 @@ class Warrior(Character):
     
     def H_ATK(self, victim):
         damage = 26
-        if warrior_buff == True:
-            int(damage *1.5)
+        if warrior_debuff == True:
+            int(damage//1.5)
         else:
             pass
 
@@ -407,8 +410,8 @@ class Warrior(Character):
         self_buff = self._health//7
         self._health -= self_buff
         damage += self_buff
-        if warrior_buff == True:
-            int(damage *1.5)
+        if warrior_debuff == True:
+            int(damage//1.5)
         else:
             pass
         
@@ -448,14 +451,49 @@ class Arena():
         
 
 
+    def error_handling(self, to_check, range):
+        #self.to_check = to_check
+        global invalid_input
+        global invalid_number
+        
+
+        if to_check.isnumeric() == True:
+            to_check = int(to_check) 
+            print(to_check)           
+            invalid_input = False
+            if to_check <= range and to_check > 0:
+                invalid_number = False
+            else:
+                print("Please input a valid number!")
+        else:
+            print("Please input a valid number!")
+
+        #try:
+            #to_check = int(to_check)
+            #invalid_input = False
+        #except ValueError:
+            #print("Please input a valid number!")
+        
+
 
     def character_choice(self, player):
         global choice_name
         global type
+        global invalid_input
+        global invalid_number
+
         self.player = player
         print(f'\n{self.player} select your style:')
-        choice_type = int(input('1. for rogue, 2. for mage and 3. for warrior \n'))
+
+        invalid_input = True
+        invalid_number = True
+        while invalid_input == True or invalid_number == True:
+            choice_type = input('1. for rogue, 2. for mage and 3. for warrior \n')
+            place.error_handling(choice_type, 3)
+        choice_type = int(choice_type)
+
         choice_name = input('Insert name for character: \n')
+
         if choice_type == 1:
             type = Rogue
         elif choice_type == 2:
@@ -467,14 +505,25 @@ class Arena():
 
 
 
+
     def choice(self, person, victim):
+        global invalid_input
+        global invalid_number
+
         making_choice = True
         while making_choice == True:
-            yaya = int(input('0. for shield, 1. for L, 2. for M, 3. for H and 4. for ult, 9. to check stats \n'))
-            if yaya == 0:
+
+            invalid_input = True
+            invalid_number = True
+            while invalid_input == True or invalid_number == True:
+                yaya = input(f"It is now {person.name}'s turn! press the following: \n  1. for shield that regenerates your {person.specific},\n  2. For a light attack,\n  3. For a medium attack,\n  4. For a heavy attack,\n  5. For a ultimate attack,\n  6. To check stats \n")
+                place.error_handling(yaya, 6)
+            yaya = int(yaya)
+
+            if yaya == 1:
                 person.shields()
                 making_choice = False
-            elif yaya == 1:
+            elif yaya == 2:
                 person.check('L')
                 if person.got_it == True:
                     person.L_ATK(victim)
@@ -482,7 +531,7 @@ class Arena():
                 else:
                     print(f'Sorry but {person.name} does not have enoygh {person.specific} points')
 
-            elif yaya == 2:
+            elif yaya == 3:
                 person.check('M')
                 if person.got_it == True:
                     person.M_ATK(victim)
@@ -490,7 +539,7 @@ class Arena():
                 else:
                     print(f'Sorry but {person.name} does not have enoygh {person.specific} points')
 
-            elif yaya == 3:
+            elif yaya == 4:
                 person.check('H')
                 if person.got_it == True:
                     person.H_ATK(victim)
@@ -498,7 +547,7 @@ class Arena():
                 else:
                     print(f'Sorry but {person.name} does not have enoygh {person.specific} points')
                     
-            elif yaya == 4:
+            elif yaya == 5:
                 if person._ult >= person._enough:
                     person.check('S')
                     if person.got_it == True:
@@ -509,37 +558,73 @@ class Arena():
                 else:
                     print(f'Sorry but {person.name} does not have enough ult points')
 
-            elif yaya == 9:
+            elif yaya == 6:
                 person.check_stats()
-            elif yaya == 10:
-                person.skip_turn()
-                making_choice = False
+                time.sleep(2)
             else:
                 print('uh oh')
+                quit()
     
 
 
 
     def arena_type(self):
-        print('there are three and bla bla ba')
-        what_arena = int(input('1. for _, 2. for __, 3. for ___.'))
-        global rogue_buff
-        global mage_buff
-        global warrior_buff
-        if what_arena == 1:
-            rogue_buff = True
-            mage_buff = True
-            print('rog and mag buffed!')
-        elif what_arena == 2:
-            mage_buff = True
-            warrior_buff = True
-            print('mag and war buffed!')
-        elif what_arena == 3:
-            rogue_buff = True
-            warrior_buff = True
-            print('rog and war buffed!')
+        global rogue_debuff
+        global mage_debuff
+        global warrior_debuff
+
+        global invalid_input
+        global invalid_number
+
+        options = []
+
+        print('There are 3 are three different fightings arenas to pick from, each one having different effects on each character. \n  The first arena takes place in a mirrored dimension where the gravitational pull is much stronger. \n  The second arena takes place in an abandoned testing ground for machines, many strong magnets were left behind. \n  The third and last arena takes place in a corrupt forrest, the soil absorbing all magic from the area leaving it dry and lifeless. \n')
+        print('To make it fair, both players will pick an arena and both options will be randomly picked from.')
+
+        invalid_input = True
+        invalid_number = True
+        while invalid_input == True or invalid_number == True:
+            what_arena1 = input('\nPlayer 1, please pick your arena. \n1. for the first arena, 2. for the second one or 3. for the last one.')
+            place.error_handling(what_arena1, 3)
+        what_arena1 = int(what_arena1)
+
+        invalid_input = True
+        invalid_number = True
+        while invalid_input == True or invalid_number == True:
+            what_arena2 = input('\nPlayer 2, please pick your arena. \n1. for the first arena, 2. for the second one or 3. for the last one.')
+            place.error_handling(what_arena2, 3)
+        what_arena1 = int(what_arena2)
+
+        options.append(what_arena1)
+        options.append(what_arena2)
+
+        what_arena = random.choice(options)
+        options.clear()
+
+        if what_arena == 1: #More gravity
+            rogue_debuff = True
+
+            print('Arena 1 has been selected!')
+            time.sleep(1)
+            print('Due to the increased gravity in the area, any rogue characters will have a harder time moving!')
+            time.sleep(2)
+        elif what_arena == 2: #Strong magnets
+            warrior_debuff = True
+
+            print('Arena 2 has been selected!')
+            time.sleep(1)
+            print('Due to the strong magnets in the area, any warrior characters will have a harder time using their weapons!')
+            time.sleep(2)
+        elif what_arena == 3: #The ground consumes magic
+            mage_debuff = True
+
+            print('Arena 3 has been selected!')
+            time.sleep(1)
+            print('Due to the corrupted soil in the area, any mage characters will have a harder time casting spells!')
+            time.sleep(2)
         else:
-            print('uhoh')
+            print('none picked??')
+            quit()
         
 
 
@@ -589,7 +674,10 @@ class Arena():
         global player_1
         global player_2
 
-        instructions = "  Each player gets to pick a fighter and an arena to fight in. \n  On each turn you have three attack options, and a special attack once you have enough ult points. \n  You could even use shields or skip your turn entirely! \n  But beware, you get one move only, so think wisely!\n"
+        global invalid_input
+        global invalid_number
+
+        instructions = "  Each player gets to pick a fighter and an arena to fight in. \n  On each turn you have three attack options, and a special attack once you have enough ult points. \n  You could even use shields to take less damage and regenerate your special stat like mana! \n  But beware, you get one move only, so think wisely!\n"
         instructions2 ="  The rogue is a cunning thief, using their agility and fast action to dodge attacks and catch their prey by surprise and strike them down where they least expected it. \n  The mage is born with the gift of magic, using their power to call the forces of nature to aid them in battle from afar and heal themselves when needed. \n  The warrior is a brave soldier driven by their strong sense of justice cursed with axe that draws from their lifeforce to deal extra damage to whoever stands in their way.\n"
         beginning = True
 
@@ -599,7 +687,14 @@ class Arena():
         print(instructions2)
 
         while beginning == True:
-            start = int(input('To start the game press 1, press 2 for instructions again or 3 to quit.'))
+
+            invalid_input = True
+            invalid_number = True
+            while invalid_input == True or invalid_number == True:
+                start = input('To start the game press 1, press 2 for instructions again or 3 to quit.')
+                place.error_handling(start, 3)
+            start = int(start)
+
             if start == 1:
                 pass
                 beginning = False
@@ -610,7 +705,8 @@ class Arena():
                 print("Sad to see you go, but hope you'd be up for a game coon :)")
                 quit()
             else:
-                pass
+                print('what the-')
+                quit()
         
 
 
@@ -621,30 +717,43 @@ class Arena():
 
             place.character_choice(player_1)
             player_1 = type(choice_name)
+            print(f'Hello {player_1.name}!')
 
             place.character_choice(player_2)
             player_2 = type(choice_name)
+            print(f'Hello {player_2.name}!')
 
 
             place.arena_type()
 
             place.game()
 
-            keep = int(input('Want to play again? \n1. for yes. \n2. for no.'))
+            invalid_input = True
+            invalid_number = True
+            while invalid_input == True or invalid_number == True:
+                keep = input('Want to play again? \n1. for yes. \n2. for no.')
+                place.error_handling(keep, 2)
+            keep = int(keep)
+
             if keep == 1:
                 del player_1
                 del player_2
 
                 beginning = True
                 while beginning == True:
-                    start = int(input('if you want instructions again, press 1, otherwise press 2.'))
+                    invalid_input = True
+                    invalid_number = True
+                    while invalid_input == True or invalid_number == True:
+                        start = input('if you want instructions again, press 1, otherwise press 2.')
+                        place.error_handling(start, 2)
                     if start == 1:
                         print(instructions)
                         
                     elif start == 2:
                         beginning = False
                     else:
-                        pass
+                        print('what the-')
+                        quit()
 
                 
             elif keep == 2:
@@ -652,6 +761,7 @@ class Arena():
                 break
             else:
                 print('huh?')
+                quit()
 
 
 
